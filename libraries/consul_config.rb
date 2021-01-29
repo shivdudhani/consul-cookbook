@@ -13,10 +13,7 @@ module ConsulCookbook
     class ConsulConfig < Chef::Resource
       include Poise(fused: true)
       include ConsulCookbook::Helpers
-      provides :consul_config do |node|
-        node['consul']['version'].to_i < 1
-      end
-
+      provides :consul_config
 
       # @!attribute path
       # @return [String]
@@ -99,6 +96,7 @@ module ConsulCookbook
       attribute(:ports, kind_of: [Hash, Mash])
       attribute(:protocol, kind_of: String)
       attribute(:raft_protocol, kind_of: Integer)
+      attribute(:raft_trailing_logs, kind_of: Integer)
       attribute(:reap, equal_to: [true, false])
       attribute(:reconnect_timeout, kind_of: String)
       attribute(:reconnect_timeout_wan, kind_of: String)
@@ -111,6 +109,7 @@ module ConsulCookbook
       attribute(:retry_join_wan, kind_of: Array)
       attribute(:retry_max, kind_of: Integer)
       attribute(:rejoin_after_leave, equal_to: [true, false])
+      attribute(:rpc, kind_of: [Hash, Mash])
       attribute(:segment, kind_of: String)
       attribute(:segments, kind_of: [Hash, Mash])
       attribute(:serf_lan_bind, kind_of: String)
@@ -133,6 +132,7 @@ module ConsulCookbook
       attribute(:ui, equal_to: [true, false])
       attribute(:ui_dir, kind_of: String)
       attribute(:unix_sockets, kind_of: [Hash, Mash])
+      attribute(:use_streaming_backend, equal_to: [true, false])
       attribute(:verify_incoming, equal_to: [true, false])
       attribute(:verify_incoming_https, equal_to: [true, false])
       attribute(:verify_incoming_rpc, equal_to: [true, false])
@@ -199,6 +199,7 @@ module ConsulCookbook
           protocol
           reap
           raft_protocol
+          raft_trailing_logs
           reconnect_timeout
           reconnect_timeout_wan
           recursor
@@ -210,6 +211,7 @@ module ConsulCookbook
           retry_join_ec2
           retry_join_wan
           retry_max
+          rpc
           segment
           segments
           serf_lan_bind
@@ -232,6 +234,7 @@ module ConsulCookbook
           ui
           ui_dir
           unix_sockets
+          use_streaming_backend
           verify_incoming
           verify_incoming_https
           verify_incoming_rpc
