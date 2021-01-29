@@ -60,6 +60,7 @@ module ConsulCookbook
       attribute(:auto_encrypt, kind_of: [Hash, Mash])
       attribute(:bind_addr, kind_of: String)
       attribute(:bootstrap, equal_to: [true, false])
+      attribute(:use_streaming_backend, equal_to: [true, false])
       attribute(:bootstrap_expect, kind_of: Integer)
       attribute(:ca_file, kind_of: String)
       attribute(:ca_path, kind_of: String)
@@ -95,6 +96,7 @@ module ConsulCookbook
       attribute(:http_config, kind_of: [Hash, Mash])
       attribute(:key_file, kind_of: String)
       attribute(:leave_on_terminate, equal_to: [true, false])
+      attribute(:rpc, kind_of: [Hash, Mash])
       attribute(:limits, kind_of: [Hash, Mash])
       attribute(:log_file, kind_of: String)
       attribute(:log_level, equal_to: %w(INFO DEBUG WARN ERR))
@@ -208,6 +210,7 @@ module ConsulCookbook
           gossip_wan
           http_config
           leave_on_terminate
+          rpc
           limits
           log_file
           log_level
@@ -266,6 +269,7 @@ module ConsulCookbook
         )
 
         for_keeps << %i(discovery_max_stale) if node['consul']['version'] > '1.0.6'
+        for_keeps << %i(use_streaming_backend) if node['consul']['version'] > '1.0.6'
         for_keeps << %i(bootstrap bootstrap_expect) if server
         for_keeps << %i(ca_file ca_path cert_file enable_agent_tls_for_checks key_file) if tls?
         for_keeps = for_keeps.flatten
