@@ -5,12 +5,14 @@
 # Copyright 2014-2016, Bloomberg Finance L.P.
 #
 
+
 case node['platform']
 when 'ubuntu'
   if node['consul']['config']['server'] === true
-    include_recipe '::dns'
+    include_recipe '::systemd-resolved'
   end
 end
+
 
 poise_service_user node['consul']['service_user'] do
   group node['consul']['service_group']

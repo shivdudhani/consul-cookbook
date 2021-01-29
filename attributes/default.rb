@@ -41,7 +41,7 @@ default['consul']['version'] = '1.2.4'
 
 # Our repo for testing enterprise packages.
 # Use this location when testing enterprise.
-# default['consul']['archive_url_root'] = 'https://cdn.aws.robloxlabs.com'
+# default['consul']['archive_url_root'] = 'https://cdn.aws.robloxlabs.com'#
 default['consul']['archive_url_root'] = 'https://releases.hashicorp.com'
 
 # When turning this to true, be sure the enterprise packages are located

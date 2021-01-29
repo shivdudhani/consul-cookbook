@@ -1,9 +1,18 @@
-# since Consul 0.9.0 enable_script_checks is required to allow scripts to run
-# https://www.consul.io/docs/agent/options.html#_enable_script_checks
-# this allows the consul_definition recipe to run correctly
-node.default['consul']['config']['enable_script_checks'] = true
 
-include_recipe 'consul::default'
-include_recipe 'consul_spec::consul_definition'
-include_recipe 'consul_spec::consul_watch'
-include_recipe 'consul_spec::consul_acl' unless node.platform_family?('windows')
+# The ruby interpreter is guaranteed to exist since it's currently running.
+file '/consul_watch_handler.rb' do
+  content <<-EOF.gsub(/^ */, '')
+    /bin/sh -c 'echo "Consul watch handler invoked"'
+  EOF
+  unless node.platform?('windows')
+    owner 'root'
+    mode '0755'
+  end
+end
+
+consul_watch 'consul_watch_check' do
+  type 'event'
+  user 'root'
+  parameters(handler: '/consul_watch_handler.rb')
+  notifies :reload, 'consul_service[consul]', :delayed
+end

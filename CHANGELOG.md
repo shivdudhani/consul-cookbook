@@ -520,7 +520,7 @@
 - Is the chef-provisioning cookbook a dependency? [\#139](https://github.com/johnbellone/consul-cookbook/issues/139)
 - chef-provisioning should not be a dependency [\#137](https://github.com/johnbellone/consul-cookbook/issues/137)
 - Add 0.5.0 checksums [\#136](https://github.com/johnbellone/consul-cookbook/issues/136)
-- consul::ui recipe is failing to converge with Errno::EISDIR [\#133](https://github.com/johnbellone/consul-cookbook/issues/133)
+- consul::ui recipe is failing to converge with Errno::EISDIR [\#133](https://github.com/johnbellone/consul-cookbook/issues/133)
 
 **Merged pull requests:**
 
